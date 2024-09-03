@@ -32,15 +32,15 @@ func TestSelect(t *testing.T) {
 			})
 		})
 
-		t.Run("SelectOrdered/"+tc.name, func(t *testing.T) {
+		t.Run("Ordered/"+tc.name, func(t *testing.T) {
 			testSelect(t, tc.input, tc.k, func(input []int, k int) {
-				SelectOrdered(input, k)
+				Ordered(input, k)
 			})
 		})
 
-		t.Run("SelectFunc/"+tc.name, func(t *testing.T) {
+		t.Run("Func/"+tc.name, func(t *testing.T) {
 			testSelect(t, tc.input, tc.k, func(input []int, k int) {
-				SelectFunc(input, k, cmp.Compare)
+				Func(input, k, cmp.Compare)
 			})
 		})
 	}
@@ -95,12 +95,12 @@ func FuzzSelect(f *testing.F) {
 			Select(sort.IntSlice(slice), k)
 		})
 
-		fuzzSelect(t, input, int(k), "SelectOrdered", func(slice []int, k int) {
-			SelectOrdered(slice, k)
+		fuzzSelect(t, input, int(k), "Ordered", func(slice []int, k int) {
+			Ordered(slice, k)
 		})
 
-		fuzzSelect(t, input, int(k), "SelectFunc", func(slice []int, k int) {
-			SelectFunc(slice, k, cmp.Compare)
+		fuzzSelect(t, input, int(k), "Func", func(slice []int, k int) {
+			Func(slice, k, cmp.Compare)
 		})
 	})
 }
@@ -143,8 +143,8 @@ func fuzzSelect(t *testing.T, input []int, k int, name string, selectFunc func([
 }
 
 func BenchmarkSelect(b *testing.B) {
-	sizes := []int{100, 10000, 100000}
-	kRatios := []float64{0.1, 0.5, 0.9}
+	sizes := []int{100000, 10000, 1000}
+	kRatios := []float64{0.01, 0.05, 0.1}
 	distributions := []string{"random", "sorted", "reversed", "equal", "mostly_equal"}
 
 	for _, size := range sizes {
@@ -164,25 +164,25 @@ func BenchmarkSelect(b *testing.B) {
 					}
 				})
 
-				b.Run("SelectOrdered/"+benchName, func(b *testing.B) {
+				b.Run("Ordered/"+benchName, func(b *testing.B) {
 					data := generateSlice(size, dist)
 					b.ReportAllocs()
 					b.ResetTimer()
 					for i := 0; i < b.N; i++ {
 						dataCopy := make([]int, len(data))
 						copy(dataCopy, data)
-						SelectOrdered(dataCopy, k)
+						Ordered(dataCopy, k)
 					}
 				})
 
-				b.Run("SelectFunc/"+benchName, func(b *testing.B) {
+				b.Run("Func/"+benchName, func(b *testing.B) {
 					data := generateSlice(size, dist)
 					b.ReportAllocs()
 					b.ResetTimer()
 					for i := 0; i < b.N; i++ {
 						dataCopy := make([]int, len(data))
 						copy(dataCopy, data)
-						SelectFunc(dataCopy, k, cmp.Compare)
+						Func(dataCopy, k, cmp.Compare)
 					}
 				})
 

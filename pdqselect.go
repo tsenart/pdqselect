@@ -28,9 +28,9 @@ func Select(data sort.Interface, k int) {
 	pdqselect(data, 0, n, k-1, bits.Len(uint(n)))
 }
 
-// SelectOrdered is a specialized version of Select that works with slices of
+// Ordered is a specialized version of Select that works with slices of
 // ordered types (i.e. types that implement the cmp.Ordered interface).
-func SelectOrdered[T cmp.Ordered](data []T, k int) {
+func Ordered[T cmp.Ordered](data []T, k int) {
 	n := len(data)
 	if k < 1 || k > n {
 		return
@@ -38,9 +38,9 @@ func SelectOrdered[T cmp.Ordered](data []T, k int) {
 	pdqselectOrdered(data, 0, n, k-1, bits.Len(uint(n)))
 }
 
-// SelectFunc is a generic version of Select that allows the caller to provide
+// Func is a generic version of Select that allows the caller to provide
 // a custom comparison function to determine the order of elements.
-func SelectFunc[E any](data []E, k int, cmp func(i, j E) int) {
+func Func[E any](data []E, k int, cmp func(i, j E) int) {
 	n := len(data)
 	if k < 1 || k > n {
 		return
