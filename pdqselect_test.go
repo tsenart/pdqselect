@@ -143,8 +143,12 @@ func fuzzSelect(t *testing.T, input []int, k int, name string, selectFunc func([
 }
 
 func BenchmarkSelect(b *testing.B) {
-	for _, n := range []int{1e6, 1e5, 1e4} {
+	for _, n := range []int{1e6, 1e4, 100} {
 		for _, k := range []int{1, 100, 1000} {
+			if k > n {
+				continue
+			}
+
 			for _, dist := range []string{"random", "sorted", "reversed", "mostly_sorted"} {
 				benchName := fmt.Sprintf("n=%d/k=%d/%s", n, k, dist)
 				data := generateSlice(n, dist)

@@ -1,7 +1,7 @@
 // The pdqselect package implements an adaptive selection algorithm that finds
-// the k-th smallest element in a data structure. It is based on Go's pdqsort implementation,
-// which is a hybrid sorting algorithm that combines quicksort, insertion sort, heapsort and
-// other pattern defeating techniques to achieve optimal performance on a wide range of data.
+// the k-th smallest elements in an ordered data structure. It is based on Go's pdqsort
+// implementation, which is a hybrid sorting algorithm that combines quicksort, insertion sort,
+// heapsort and other pattern defeating techniques to achieve optimal performance on a wide range of data.
 package pdqselect
 
 import (
