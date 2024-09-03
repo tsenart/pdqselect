@@ -10,7 +10,7 @@
 - **O(n) Average Time Complexity**: Outperforms sorting-based selection methods for large datasets.
 - **Adaptive**: Efficiently handles various data patterns, including already sorted data, reverse-sorted data, and data with many duplicates.
 - **In-Place**: Operates directly on the input slice without requiring additional memory allocation.
-- **Generic**: Works with any type that implements the `sort.Interface`.
+- **Generic**: Supports multiple data types and custom comparison functions.
 - **Robust**: Gracefully degrades to heapsort for pathological cases, ensuring O(n log n) worst-case performance.
 
 ## Installation
@@ -21,6 +21,16 @@ go get github.com/tsenart/pdqselect
 
 ## Usage
 
+The package provides three main functions:
+
+1. `Select`: Works with any type that implements the `sort.Interface`.
+2. `SelectOrdered`: Specialized for slices of ordered types (implements `cmp.Ordered`).
+3. `SelectFunc`: Generic version that allows a custom comparison function.
+
+### Examples
+
+Using `Select` with `sort.Interface`:
+
 ```go
 import (
     "fmt"
@@ -30,9 +40,41 @@ import (
 )
 
 func main() {
+    data := sort.IntSlice{5, 4, 0, 10, 1, 2, 1}
+    pdqselect.Select(data, 3)
+    fmt.Println(data[:3]) // Output: [1 0 1]
+}
+```
+
+Using `SelectOrdered` with a slice of ordered types:
+
+```go
+import (
+    "fmt"
+
+    "github.com/tsenart/pdqselect"
+)
+
+func main() {
     data := []int{5, 4, 0, 10, 1, 2, 1}
     pdqselect.SelectOrdered(data, 3)
-    fmt.Println(data[:3]) // Output: [1 3 2]
+    fmt.Println(data[:3]) // Output: [1 0 1]
+}
+```
+
+Using `SelectFunc` with a custom comparison function:
+
+```go
+import (
+    "fmt"
+
+    "github.com/tsenart/pdqselect"
+)
+
+func main() {
+    data := []float64{5.5, 4.4, 0.0, 10.1, 1.1, 2.2, 1.0}
+    pdqselect.SelectFunc(data, 3, cmp.Compare)
+    fmt.Println(data[:3]) // Output: [1 0 1.1]
 }
 ```
 
@@ -53,5 +95,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Inspired by Rust's `pdqselect` implementation.
 - Built upon Go's internal `pdqsort` algorithm.
