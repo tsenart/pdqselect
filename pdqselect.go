@@ -12,7 +12,8 @@ import (
 
 // Select swaps elements in the data provided so that the first k elements
 // (i.e. the elements occuping indices 0, 1, ..., k-1) are the smallest k elements
-// in the data.
+// in the data. It doesn't guarantee any particular order among the smallest k elements,
+// only that they are the smallest k elements in the data.
 //
 // Select implements Hoare's Selection Algorithm and runs in O(n) time, so it
 // is asymptotically faster than sorting or other heap-like implementations for

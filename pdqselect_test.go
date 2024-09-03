@@ -143,18 +143,24 @@ func fuzzSelect(t *testing.T, input []int, k int, name string, selectFunc func([
 }
 
 func BenchmarkSelect(b *testing.B) {
-	sizes := []int{100000, 10000, 1000}
-	kRatios := []float64{0.01, 0.05, 0.1}
-	distributions := []string{"random", "sorted", "reversed", "equal", "mostly_equal"}
+	for _, n := range []int{1e6, 1e5, 1e4} {
+		for _, k := range []int{1, 100, 1000} {
+			for _, dist := range []string{"random", "sorted", "reversed", "mostly_sorted"} {
+				benchName := fmt.Sprintf("n=%d/k=%d/%s", n, k, dist)
+				data := generateSlice(n, dist)
 
-	for _, size := range sizes {
-		for _, kRatio := range kRatios {
-			k := int(float64(size) * kRatio)
-			for _, dist := range distributions {
-				benchName := fmt.Sprintf("n=%d/k=%d/%s", size, k, dist)
+				b.Run("Sort/"+benchName, func(b *testing.B) {
+					b.ReportAllocs()
+					b.ResetTimer()
+					for i := 0; i < b.N; i++ {
+						dataCopy := make([]int, len(data))
+						copy(dataCopy, data)
+						slices.Sort(dataCopy)
+						_ = dataCopy[k-1] // Select k-th element
+					}
+				})
 
 				b.Run("Select/"+benchName, func(b *testing.B) {
-					data := generateSlice(size, dist)
 					b.ReportAllocs()
 					b.ResetTimer()
 					for i := 0; i < b.N; i++ {
@@ -165,7 +171,6 @@ func BenchmarkSelect(b *testing.B) {
 				})
 
 				b.Run("Ordered/"+benchName, func(b *testing.B) {
-					data := generateSlice(size, dist)
 					b.ReportAllocs()
 					b.ResetTimer()
 					for i := 0; i < b.N; i++ {
@@ -176,25 +181,12 @@ func BenchmarkSelect(b *testing.B) {
 				})
 
 				b.Run("Func/"+benchName, func(b *testing.B) {
-					data := generateSlice(size, dist)
 					b.ReportAllocs()
 					b.ResetTimer()
 					for i := 0; i < b.N; i++ {
 						dataCopy := make([]int, len(data))
 						copy(dataCopy, data)
 						Func(dataCopy, k, cmp.Compare)
-					}
-				})
-
-				b.Run("Sort/"+benchName, func(b *testing.B) {
-					data := generateSlice(size, dist)
-					b.ReportAllocs()
-					b.ResetTimer()
-					for i := 0; i < b.N; i++ {
-						dataCopy := make([]int, len(data))
-						copy(dataCopy, data)
-						slices.Sort(dataCopy)
-						_ = dataCopy[k-1] // Select k-th element
 					}
 				})
 			}
@@ -231,38 +223,14 @@ func generateSlice(size int, distribution string) []int {
 		for i := range slice {
 			slice[i] = size - i
 		}
-	case "equal":
-		for i := range slice {
-			slice[i] = 42
-		}
-	case "mostly_equal":
+	case "mostly_sorted":
 		for i := range slice {
 			if rand.Float32() < 0.9 {
-				slice[i] = 42
+				slice[i] = i
 			} else {
 				slice[i] = rand.Int()
 			}
 		}
 	}
 	return slice
-}
-
-func benchmarkPDQSelect(b *testing.B, size int, k int, distribution string) {
-	data := generateSlice(size, distribution)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		dataCopy := make([]int, len(data))
-		copy(dataCopy, data)
-		Select(sort.IntSlice(dataCopy), k)
-	}
-}
-
-func benchmarkSortSelect(b *testing.B, size int, k int, distribution string) {
-	data := generateSlice(size, distribution)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		dataCopy := make([]int, len(data))
-		copy(dataCopy, data)
-		slices.Sort(dataCopy)
-	}
 }
