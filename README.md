@@ -87,188 +87,115 @@ goos: darwin
 goarch: arm64
 pkg: github.com/tsenart/pdqselect
 cpu: Apple M3 Max
-BenchmarkSelect/Select/n=100000/k=1000/random-16                  3258	   1108941 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=1000/random-16  	              2344	    438276 ns/op	  802822 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=1000/random-16     	              1526	    740673 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=1000/random-16           	               249	   4601888 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=1000/sorted-16         	              4862	    243432 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=1000/sorted-16  	             10000	    100042 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=1000/sorted-16     	              5061	    232981 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=1000/sorted-16           	             12018	    100507 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=1000/reversed-16       	              3636	    322333 ns/op	  802845 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=1000/reversed-16         	    9745	    120925 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=1000/reversed-16            	    4698	    248515 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=1000/reversed-16                  	    9674	    118380 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=1000/equal-16                   	    4837	    244395 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=1000/equal-16            	   12447	     99205 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=1000/equal-16               	    5127	    228209 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=1000/equal-16                     	   12330	     99987 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=1000/mostly_equal-16            	    2350	    525269 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=1000/mostly_equal-16     	    6949	    156052 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=1000/mostly_equal-16        	    2215	    516669 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=1000/mostly_equal-16              	    3674	    323622 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=5000/random-16                  	    1431	    767205 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=5000/random-16           	    2710	    375032 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=5000/random-16              	    1484	   1003712 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=5000/random-16                    	     249	   4654386 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=5000/sorted-16                  	    4842	    243750 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=5000/sorted-16           	   12247	    100854 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=5000/sorted-16              	    4858	    232220 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=5000/sorted-16                    	   12028	     99973 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=5000/reversed-16                	    3612	    322395 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=5000/reversed-16         	    9670	    118168 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=5000/reversed-16            	    4551	    250005 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=5000/reversed-16                  	    9660	    121263 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=5000/equal-16                   	    4765	    246508 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=5000/equal-16            	   10000	    100224 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=5000/equal-16               	    4947	    229783 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=5000/equal-16                     	   12201	     99952 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=5000/mostly_equal-16            	    2272	    502406 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=5000/mostly_equal-16     	    6620	    152593 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=5000/mostly_equal-16        	    2170	    537337 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=5000/mostly_equal-16              	    3524	    323867 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=10000/random-16                 	    1416	    850070 ns/op	  802848 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=10000/random-16          	    4720	    357472 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=10000/random-16             	    2252	    857684 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=10000/random-16                   	     253	   4698393 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=10000/sorted-16                 	    4857	    244634 ns/op	  802844 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=10000/sorted-16          	   12151	    100510 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=10000/sorted-16             	    5071	    230501 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=10000/sorted-16                   	   12350	    100514 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=10000/reversed-16               	    3674	    321801 ns/op	  802843 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=10000/reversed-16        	    9727	    121273 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=10000/reversed-16           	    4692	    249779 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=10000/reversed-16                 	    9750	    118881 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=10000/equal-16                  	    4744	    247068 ns/op	  802845 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=10000/equal-16           	   10000	    100762 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=10000/equal-16              	    4924	    232139 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=10000/equal-16                    	   10000	    100225 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=100000/k=10000/mostly_equal-16           	    2272	    533003 ns/op	  802845 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=100000/k=10000/mostly_equal-16    	    6667	    159041 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=100000/k=10000/mostly_equal-16       	    2151	    558818 ns/op	  802818 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=100000/k=10000/mostly_equal-16             	    3249	    349239 ns/op	  802819 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=100/random-16                    	   28977	     40668 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=100/random-16             	   76352	     21823 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=100/random-16                	   20977	     58405 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=100/random-16                      	    6198	    173667 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=100/sorted-16                    	   49035	     24397 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=100/sorted-16             	  120390	      9727 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=100/sorted-16                	   48834	     23677 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=100/sorted-16                      	  121506	      9919 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=100/reversed-16                  	   37465	     32030 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=100/reversed-16           	  101815	     11925 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=100/reversed-16              	   46480	     25820 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=100/reversed-16                    	  100923	     11943 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=100/equal-16                     	   48374	     24769 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=100/equal-16              	  119108	      9904 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=100/equal-16                 	   50722	     23453 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=100/equal-16                       	  120790	      9787 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=100/mostly_equal-16              	   22870	     52412 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=100/mostly_equal-16       	   77167	     14787 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=100/mostly_equal-16          	   23708	     51928 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=100/mostly_equal-16                	   52896	     22942 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=500/random-16                    	   23290	     60960 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=500/random-16             	   66494	     19980 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=500/random-16                	   21919	     56477 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=500/random-16                      	    6745	    172693 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=500/sorted-16                    	   49100	     24744 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=500/sorted-16             	  121021	     10033 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=500/sorted-16                	   50082	     23846 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=500/sorted-16                      	  121392	      9902 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=500/reversed-16                  	   37406	     32248 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=500/reversed-16           	   99088	     12000 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=500/reversed-16              	   44866	     26477 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=500/reversed-16                    	  101508	     11942 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=500/equal-16                     	   48124	     24967 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=500/equal-16              	  120061	      9679 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=500/equal-16                 	   49365	     24143 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=500/equal-16                       	  123847	      9542 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=500/mostly_equal-16              	   22813	     53273 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=500/mostly_equal-16       	   77716	     15036 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=500/mostly_equal-16          	   22905	     52193 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=500/mostly_equal-16                	   51708	     23190 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=1000/random-16                   	   30990	     56201 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=1000/random-16            	   57715	     24283 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=1000/random-16               	   25384	     60057 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=1000/random-16                     	    6507	    163102 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=1000/sorted-16                   	   48370	     24983 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=1000/sorted-16            	  121900	      9726 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=1000/sorted-16               	   49191	     24161 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=1000/sorted-16                     	  125038	      9896 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=1000/reversed-16                 	   37262	     32302 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=1000/reversed-16          	  100383	     11868 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=1000/reversed-16             	   45468	     26306 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=1000/reversed-16                   	  101955	     11924 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=1000/equal-16                    	   48316	     24879 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=1000/equal-16             	  123121	      9717 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=1000/equal-16                	   49434	     24162 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=1000/equal-16                      	  122238	      9663 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=10000/k=1000/mostly_equal-16             	   23989	     52254 ns/op	   81944 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=10000/k=1000/mostly_equal-16      	   81284	     15079 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=10000/k=1000/mostly_equal-16         	   22436	     55135 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=10000/k=1000/mostly_equal-16               	   52615	     22733 ns/op	   81920 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=10/random-16                      	  231312	      5975 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=10/random-16               	  543343	      1983 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=10/random-16                  	  185162	      5552 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=10/random-16                        	  114211	     10220 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=10/sorted-16                      	  456824	      2640 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=10/sorted-16               	 1000000	      1118 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=10/sorted-16                  	  470763	      2530 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=10/sorted-16                        	 1000000	      1139 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=10/reversed-16                    	  348313	      3403 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=10/reversed-16             	  867884	      1371 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=10/reversed-16                	  426879	      2787 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=10/reversed-16                      	  881938	      1365 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=10/equal-16                       	  450236	      2670 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=10/equal-16                	 1000000	      1123 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=10/equal-16                   	  464678	      2542 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=10/equal-16                         	 1000000	      1120 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=10/mostly_equal-16                	  223219	      9048 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=10/mostly_equal-16         	  589564	      1699 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=10/mostly_equal-16            	  207612	      5554 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=10/mostly_equal-16                  	  536198	      2479 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=50/random-16                      	  248930	      5498 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=50/random-16               	  717555	      1843 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=50/random-16                  	  287151	      5092 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=50/random-16                        	  118708	     10420 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=50/sorted-16                      	  447147	      2634 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=50/sorted-16               	 1000000	      1139 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=50/sorted-16                  	  473912	      2512 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=50/sorted-16                        	 1000000	      1108 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=50/reversed-16                    	  352773	      3377 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=50/reversed-16             	  828056	      1366 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=50/reversed-16                	  425404	      2781 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=50/reversed-16                      	  899734	      1370 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=50/equal-16                       	  452950	      2641 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=50/equal-16                	 1000000	      1123 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=50/equal-16                   	  465646	      2524 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=50/equal-16                         	 1000000	      1103 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=50/mostly_equal-16                	  210338	      5315 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=50/mostly_equal-16         	  695546	      2088 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=50/mostly_equal-16            	  216892	      5826 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=50/mostly_equal-16                  	  536475	      2357 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=100/random-16                     	  213662	      4894 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=100/random-16              	  543393	      2303 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=100/random-16                 	  213747	      5595 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=100/random-16                       	  116188	     10348 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=100/sorted-16                     	  447568	      2638 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=100/sorted-16              	 1000000	      1128 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=100/sorted-16                 	  464602	      2526 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=100/sorted-16                       	 1000000	      1117 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=100/reversed-16                   	  354590	      3381 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=100/reversed-16            	  847422	      1365 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=100/reversed-16               	  430978	      2762 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=100/reversed-16                     	  865695	      1363 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=100/equal-16                      	  449875	      2652 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=100/equal-16               	 1000000	      1127 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=100/equal-16                  	  467913	      2530 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=100/equal-16                        	 1000000	      1107 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Select/n=1000/k=100/mostly_equal-16               	  243644	      6335 ns/op	    8216 B/op	       2 allocs/op
-BenchmarkSelect/Ordered/n=1000/k=100/mostly_equal-16        	  665876	      1829 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Func/n=1000/k=100/mostly_equal-16           	  203697	      6150 ns/op	    8192 B/op	       1 allocs/op
-BenchmarkSelect/Sort/n=1000/k=100/mostly_equal-16                 	  526977	      2264 ns/op	    8192 B/op	       1 allocs/op
-PASS
-ok  	github.com/tsenart/pdqselect	262.149s
+                                         │     Sort      │                Select                │              Ordered               │                 Func                 │
+                                         │    sec/op     │    sec/op     vs base                │   sec/op     vs base               │    sec/op     vs base                │
+Select/n=1000000/k=1/random-16             57.451m ±  1%   11.919m ± 1%   -79.25% (p=0.002 n=6)   5.992m ± 1%  -89.57% (p=0.002 n=6)    9.955m ± 1%   -82.67% (p=0.002 n=6)
+Select/n=1000000/k=1/sorted-16              726.3µ ±  2%   2181.0µ ± 1%  +200.28% (p=0.002 n=6)   721.3µ ± 3%        ~ (p=0.589 n=6)   2095.2µ ± 1%  +188.47% (p=0.002 n=6)
+Select/n=1000000/k=1/reversed-16            933.0µ ±  4%   3001.1µ ± 1%  +221.65% (p=0.002 n=6)   939.1µ ± 1%        ~ (p=0.394 n=6)   2269.7µ ± 2%  +143.26% (p=0.002 n=6)
+Select/n=1000000/k=1/mostly_sorted-16      18.558m ±  0%    3.991m ± 1%   -78.49% (p=0.002 n=6)   1.339m ± 2%  -92.78% (p=0.002 n=6)    3.463m ± 1%   -81.34% (p=0.002 n=6)
+Select/n=1000000/k=100/random-16           57.763m ±  1%    8.934m ± 1%   -84.53% (p=0.002 n=6)   4.826m ± 2%  -91.64% (p=0.002 n=6)    7.857m ± 1%   -86.40% (p=0.002 n=6)
+Select/n=1000000/k=100/sorted-16            732.9µ ±  3%   2161.3µ ± 2%  +194.90% (p=0.002 n=6)   729.0µ ± 2%        ~ (p=0.818 n=6)   2111.5µ ± 1%  +188.10% (p=0.002 n=6)
+Select/n=1000000/k=100/reversed-16          972.1µ ±  3%   3041.4µ ± 1%  +212.88% (p=0.002 n=6)   961.5µ ± 3%        ~ (p=1.000 n=6)   2289.1µ ± 2%  +135.49% (p=0.002 n=6)
+Select/n=1000000/k=100/mostly_sorted-16    19.365m ±  1%    5.067m ± 1%   -73.84% (p=0.002 n=6)   1.818m ± 2%  -90.61% (p=0.002 n=6)    4.386m ± 2%   -77.35% (p=0.002 n=6)
+Select/n=1000000/k=1000/random-16          58.366m ±  1%    9.013m ± 1%   -84.56% (p=0.002 n=6)   4.739m ± 2%  -91.88% (p=0.002 n=6)    7.885m ± 1%   -86.49% (p=0.002 n=6)
+Select/n=1000000/k=1000/sorted-16           737.3µ ±  3%   2164.1µ ± 1%  +193.52% (p=0.002 n=6)   716.8µ ± 5%        ~ (p=0.485 n=6)   2141.6µ ± 2%  +190.46% (p=0.002 n=6)
+Select/n=1000000/k=1000/reversed-16         953.8µ ±  1%   3068.9µ ± 1%  +221.76% (p=0.002 n=6)   972.7µ ± 1%   +1.98% (p=0.041 n=6)   2306.0µ ± 1%  +141.77% (p=0.002 n=6)
+Select/n=1000000/k=1000/mostly_sorted-16   18.418m ±  2%    4.050m ± 0%   -78.01% (p=0.002 n=6)   1.337m ± 2%  -92.74% (p=0.002 n=6)    3.503m ± 1%   -80.98% (p=0.002 n=6)
+Select/n=10000/k=1/random-16               150.87µ ± 10%    47.18µ ± 0%   -68.73% (p=0.002 n=6)   19.33µ ± 1%  -87.19% (p=0.002 n=6)    54.13µ ± 2%   -64.12% (p=0.002 n=6)
+Select/n=10000/k=1/sorted-16                9.668µ ±  1%   24.861µ ± 0%  +157.15% (p=0.002 n=6)   9.716µ ± 1%        ~ (p=0.240 n=6)   24.174µ ± 0%  +150.04% (p=0.002 n=6)
+Select/n=10000/k=1/reversed-16              11.93µ ±  0%    32.42µ ± 0%  +171.76% (p=0.002 n=6)   11.94µ ± 0%        ~ (p=0.699 n=6)    26.23µ ± 0%  +119.83% (p=0.002 n=6)
+Select/n=10000/k=1/mostly_sorted-16        110.59µ ±  2%    41.21µ ± 0%   -62.74% (p=0.002 n=6)   12.51µ ± 0%  -88.68% (p=0.002 n=6)    37.31µ ± 0%   -66.26% (p=0.002 n=6)
+Select/n=10000/k=100/random-16             152.40µ ±  5%    49.96µ ± 1%   -67.22% (p=0.002 n=6)   20.31µ ± 0%  -86.67% (p=0.002 n=6)    60.04µ ± 7%   -60.60% (p=0.002 n=6)
+Select/n=10000/k=100/sorted-16              9.979µ ±  3%   24.533µ ± 3%  +145.85% (p=0.002 n=6)   9.699µ ± 0%   -2.80% (p=0.004 n=6)   23.301µ ± 1%  +133.51% (p=0.002 n=6)
+Select/n=10000/k=100/reversed-16            11.77µ ±  1%    31.59µ ± 1%  +168.28% (p=0.002 n=6)   11.72µ ± 0%   -0.42% (p=0.009 n=6)    25.17µ ± 0%  +113.75% (p=0.002 n=6)
+Select/n=10000/k=100/mostly_sorted-16       76.43µ ±  1%    40.54µ ± 1%   -46.96% (p=0.002 n=6)   12.44µ ± 1%  -83.73% (p=0.002 n=6)    35.03µ ± 2%   -54.17% (p=0.002 n=6)
+Select/n=10000/k=1000/random-16            154.94µ ± 10%    53.02µ ± 2%   -65.78% (p=0.002 n=6)   21.09µ ± 1%  -86.39% (p=0.002 n=6)    59.30µ ± 2%   -61.73% (p=0.002 n=6)
+Select/n=10000/k=1000/sorted-16             9.743µ ±  1%   24.469µ ± 1%  +151.14% (p=0.002 n=6)   9.770µ ± 1%        ~ (p=0.331 n=6)   23.377µ ± 1%  +139.94% (p=0.002 n=6)
+Select/n=10000/k=1000/reversed-16           11.80µ ±  0%    31.74µ ± 1%  +168.99% (p=0.002 n=6)   11.87µ ± 1%        ~ (p=0.087 n=6)    25.59µ ± 1%  +116.84% (p=0.002 n=6)
+Select/n=10000/k=1000/mostly_sorted-16      86.10µ ±  1%    41.30µ ± 0%   -52.03% (p=0.002 n=6)   12.43µ ± 1%  -85.56% (p=0.002 n=6)    35.38µ ± 1%   -58.91% (p=0.002 n=6)
+Select/n=100/k=1/random-16                  673.8n ±  1%    568.7n ± 0%   -15.60% (p=0.002 n=6)   233.8n ± 1%  -65.30% (p=0.002 n=6)    555.2n ± 1%   -17.62% (p=0.002 n=6)
+Select/n=100/k=1/sorted-16                  131.4n ±  0%    322.0n ± 1%  +145.02% (p=0.002 n=6)   133.5n ± 1%   +1.60% (p=0.002 n=6)    288.9n ± 1%  +119.86% (p=0.002 n=6)
+Select/n=100/k=1/reversed-16                155.6n ±  1%    400.7n ± 0%  +157.40% (p=0.002 n=6)   158.9n ± 0%   +2.06% (p=0.002 n=6)    308.0n ± 0%   +97.88% (p=0.002 n=6)
+Select/n=100/k=1/mostly_sorted-16           585.6n ±  2%    466.2n ± 0%   -20.40% (p=0.002 n=6)   177.1n ± 0%  -69.77% (p=0.002 n=6)    444.4n ± 1%   -24.12% (p=0.002 n=6)
+Select/n=100/k=100/random-16                663.7n ±  1%    704.4n ± 0%    +6.13% (p=0.002 n=6)   281.5n ± 1%  -57.59% (p=0.002 n=6)    684.8n ± 1%    +3.17% (p=0.002 n=6)
+Select/n=100/k=100/sorted-16                132.7n ±  1%    322.6n ± 1%  +143.10% (p=0.002 n=6)   133.8n ± 1%   +0.83% (p=0.006 n=6)    290.3n ± 0%  +118.80% (p=0.002 n=6)
+Select/n=100/k=100/reversed-16              155.9n ±  0%    401.1n ± 0%  +157.25% (p=0.002 n=6)   159.1n ± 0%   +2.08% (p=0.002 n=6)    309.2n ± 0%   +98.36% (p=0.002 n=6)
+Select/n=100/k=100/mostly_sorted-16         495.7n ±  1%    583.3n ± 0%   +17.69% (p=0.002 n=6)   221.4n ± 1%  -55.32% (p=0.002 n=6)    595.6n ± 0%   +20.17% (p=0.002 n=6)
+geomean                                     69.71µ          70.96µ         +1.80%                 26.66µ       -61.76%                  63.89µ         -8.35%
+
+                                         │     Sort     │               Select               │               Ordered                │                 Func                 │
+                                         │     B/op     │     B/op      vs base              │     B/op      vs base                │     B/op      vs base                │
+Select/n=1000000/k=1/random-16             7.633Mi ± 0%   7.633Mi ± 0%       ~ (p=0.063 n=6)   7.633Mi ± 0%       ~ (p=0.753 n=6)     7.633Mi ± 0%       ~ (p=0.556 n=6)
+Select/n=1000000/k=1/sorted-16             7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=0.515 n=6)     7.633Mi ± 0%       ~ (p=0.316 n=6)
+Select/n=1000000/k=1/reversed-16           7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=1.000 n=6)     7.633Mi ± 0%       ~ (p=1.000 n=6)
+Select/n=1000000/k=1/mostly_sorted-16      7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=0.290 n=6)     7.633Mi ± 0%       ~ (p=0.316 n=6)
+Select/n=1000000/k=100/random-16           7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%  +0.00% (p=0.026 n=6)     7.633Mi ± 0%       ~ (p=0.113 n=6)
+Select/n=1000000/k=100/sorted-16           7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=1.000 n=6)     7.633Mi ± 0%       ~ (p=0.636 n=6)
+Select/n=1000000/k=100/reversed-16         7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=0.545 n=6)     7.633Mi ± 0%       ~ (p=0.545 n=6)
+Select/n=1000000/k=100/mostly_sorted-16    7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=0.123 n=6)     7.633Mi ± 0%       ~ (p=0.123 n=6)
+Select/n=1000000/k=1000/random-16          7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=0.394 n=6)     7.633Mi ± 0%       ~ (p=0.351 n=6)
+Select/n=1000000/k=1000/sorted-16          7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=1.000 n=6)     7.633Mi ± 0%       ~ (p=0.061 n=6)
+Select/n=1000000/k=1000/reversed-16        7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=0.182 n=6)     7.633Mi ± 0%       ~ (p=0.182 n=6)
+Select/n=1000000/k=1000/mostly_sorted-16   7.633Mi ± 0%   7.633Mi ± 0%  +0.00% (p=0.002 n=6)   7.633Mi ± 0%       ~ (p=0.537 n=6)     7.633Mi ± 0%       ~ (p=0.509 n=6)
+Select/n=10000/k=1/random-16               80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1/sorted-16               80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1/reversed-16             80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1/mostly_sorted-16        80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=100/random-16             80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=100/sorted-16             80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=100/reversed-16           80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=100/mostly_sorted-16      80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1000/random-16            80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1000/sorted-16            80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1000/reversed-16          80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1000/mostly_sorted-16     80.00Ki ± 0%   80.02Ki ± 0%  +0.03% (p=0.002 n=6)   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹   80.00Ki ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=1/random-16                   896.0 ± 0%     920.0 ± 0%  +2.68% (p=0.002 n=6)     896.0 ± 0%       ~ (p=1.000 n=6) ¹     896.0 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=1/sorted-16                   896.0 ± 0%     920.0 ± 0%  +2.68% (p=0.002 n=6)     896.0 ± 0%       ~ (p=1.000 n=6) ¹     896.0 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=1/reversed-16                 896.0 ± 0%     920.0 ± 0%  +2.68% (p=0.002 n=6)     896.0 ± 0%       ~ (p=1.000 n=6) ¹     896.0 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=1/mostly_sorted-16            896.0 ± 0%     920.0 ± 0%  +2.68% (p=0.002 n=6)     896.0 ± 0%       ~ (p=1.000 n=6) ¹     896.0 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=100/random-16                 896.0 ± 0%     920.0 ± 0%  +2.68% (p=0.002 n=6)     896.0 ± 0%       ~ (p=1.000 n=6) ¹     896.0 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=100/sorted-16                 896.0 ± 0%     920.0 ± 0%  +2.68% (p=0.002 n=6)     896.0 ± 0%       ~ (p=1.000 n=6) ¹     896.0 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=100/reversed-16               896.0 ± 0%     920.0 ± 0%  +2.68% (p=0.002 n=6)     896.0 ± 0%       ~ (p=1.000 n=6) ¹     896.0 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=100/mostly_sorted-16          896.0 ± 0%     920.0 ± 0%  +2.68% (p=0.002 n=6)     896.0 ± 0%       ~ (p=1.000 n=6) ¹     896.0 ± 0%       ~ (p=1.000 n=6) ¹
+geomean                                    144.2Ki        145.2Ki       +0.67%                 144.2Ki       +0.00%                   144.2Ki       +0.00%
+¹ all samples are equal
+
+                                         │    Sort    │               Select               │              Ordered               │                Func                │
+                                         │ allocs/op  │ allocs/op   vs base                │ allocs/op   vs base                │ allocs/op   vs base                │
+Select/n=1000000/k=1/random-16             1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=1/sorted-16             1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=1/reversed-16           1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=1/mostly_sorted-16      1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=100/random-16           1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=100/sorted-16           1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=100/reversed-16         1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=100/mostly_sorted-16    1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=1000/random-16          1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=1000/sorted-16          1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=1000/reversed-16        1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=1000000/k=1000/mostly_sorted-16   1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1/random-16               1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1/sorted-16               1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1/reversed-16             1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1/mostly_sorted-16        1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=100/random-16             1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=100/sorted-16             1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=100/reversed-16           1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=100/mostly_sorted-16      1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1000/random-16            1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1000/sorted-16            1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1000/reversed-16          1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=10000/k=1000/mostly_sorted-16     1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=1/random-16                 1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=1/sorted-16                 1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=1/reversed-16               1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=1/mostly_sorted-16          1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=100/random-16               1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=100/sorted-16               1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=100/reversed-16             1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+Select/n=100/k=100/mostly_sorted-16        1.000 ± 0%   2.000 ± 0%  +100.00% (p=0.002 n=6)   1.000 ± 0%       ~ (p=1.000 n=6) ¹   1.000 ± 0%       ~ (p=1.000 n=6) ¹
+geomean                                    1.000        2.000       +100.00%                 1.000       +0.00%                   1.000       +0.00%
+¹ all samples are equal
 ```
 
 ## Contributing
