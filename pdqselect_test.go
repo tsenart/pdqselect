@@ -190,16 +190,6 @@ func BenchmarkSelect(b *testing.B) {
 					}
 				})
 
-				b.Run("Select/"+benchName, func(b *testing.B) {
-					b.ReportAllocs()
-					b.ResetTimer()
-					for i := 0; i < b.N; i++ {
-						dataCopy := make([]int, len(data))
-						copy(dataCopy, data)
-						Select(sort.IntSlice(dataCopy), k)
-					}
-				})
-
 				b.Run("Ordered/"+benchName, func(b *testing.B) {
 					b.ReportAllocs()
 					b.ResetTimer()
@@ -219,6 +209,17 @@ func BenchmarkSelect(b *testing.B) {
 						Func(dataCopy, k, cmp.Compare)
 					}
 				})
+
+				b.Run("Select/"+benchName, func(b *testing.B) {
+					b.ReportAllocs()
+					b.ResetTimer()
+					for i := 0; i < b.N; i++ {
+						dataCopy := make([]int, len(data))
+						copy(dataCopy, data)
+						Select(sort.IntSlice(dataCopy), k)
+					}
+				})
+
 			}
 		}
 	}
