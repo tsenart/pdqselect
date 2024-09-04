@@ -67,7 +67,7 @@ func pdqselect(data sort.Interface, a, b, k, limit int) {
 
 		// Fall back to heap select if too many bad choices were made.
 		if limit == 0 {
-			heapSelect(data, a, b, k-a+1)
+			heapSelect(data, a, b, k+1)
 			return
 		}
 
@@ -138,7 +138,7 @@ func pdqselectOrdered[T cmp.Ordered](data []T, a, b, k, limit int) {
 
 		// Fall back to heap select if too many bad choices were made.
 		if limit == 0 {
-			heapSelectOrdered(data, a, b, k-a+1)
+			heapSelectOrdered(data, a, b, k+1)
 			return
 		}
 
@@ -209,7 +209,7 @@ func pdqselectFunc[E any](data []E, a, b, k, limit int, cmp func(a, b E) int) {
 
 		// Fall back to heap select if too many bad choices were made.
 		if limit == 0 {
-			heapSelectFunc(data, a, b, k-a+1, cmp)
+			heapSelectFunc(data, a, b, k+1, cmp)
 			return
 		}
 

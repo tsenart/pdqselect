@@ -27,126 +27,134 @@ func TestSelect(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run("Select/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, "Select", func(input []int, k int) {
+			testSelect(t, tc.input, 0, len(tc.input), tc.k, "Select", func(input []int, a, b, k int) {
 				Select(sort.IntSlice(input), k)
 			})
 		})
 
 		t.Run("Ordered/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, "Ordered", func(input []int, k int) {
+			testSelect(t, tc.input, 0, len(tc.input), tc.k, "Ordered", func(input []int, a, b, k int) {
 				Ordered(input, k)
 			})
 		})
 
 		t.Run("Func/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, "Func", func(input []int, k int) {
+			testSelect(t, tc.input, 0, len(tc.input), tc.k, "Func", func(input []int, a, b, k int) {
 				Func(input, k, cmp.Compare)
-			})
-		})
-
-		t.Run("heapSelect/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, "heapSelect", func(input []int, k int) {
-				pdqselect(sort.IntSlice(input), 0, len(input), k-1, 0) // limit = 0 means we'll use heapSelect
-			})
-		})
-
-		t.Run("heapSelectOrdered/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, "heapSelectOrdered", func(input []int, k int) {
-				pdqselectOrdered(input, 0, len(input), k-1, 0) // limit = 0 means we'll use heapSelect
-			})
-		})
-
-		t.Run("heapSelectFunc/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, "heapSelectFunc", func(input []int, k int) {
-				pdqselectFunc(input, 0, len(input), k-1, 0, cmp.Compare) // limit = 0 means we'll use heapSelect
 			})
 		})
 	}
 }
 
 func FuzzSelect(f *testing.F) {
-	f.Add([]byte{1, 4}, uint(2))
-	f.Add([]byte{1, 4, 2}, uint(2))
-	f.Add([]byte{1, 4, 2, 1}, uint(2))
-	f.Add([]byte{1, 2, 3, 4, 5}, uint(3))
-	f.Add([]byte{5, 4, 3, 2, 1}, uint(2))
-	f.Add([]byte{1, 1, 1, 1, 1}, uint(1))
-	f.Add([]byte{1, 4, 7, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, uint(7))
-	f.Add([]byte{254, 4, 7, 2, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 253}, uint(7))
+	f.Add([]byte{1, 4}, uint16(1), uint16(0), uint16(2))
+	f.Add([]byte{1, 4, 2}, uint16(2), uint16(0), uint16(3))
+	f.Add([]byte{1, 4, 2, 1}, uint16(2), uint16(1), uint16(4))
+	f.Add([]byte{1, 2, 3, 4, 5}, uint16(3), uint16(0), uint16(5))
+	f.Add([]byte{5, 4, 3, 2, 1}, uint16(2), uint16(1), uint16(4))
+	f.Add([]byte{1, 1, 1, 1, 1}, uint16(1), uint16(0), uint16(5))
+	f.Add([]byte{1, 4, 7, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, uint16(7), uint16(3), uint16(12))
+	f.Add([]byte{254, 4, 7, 2, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 253}, uint16(7), uint16(0), uint16(16))
 
-	f.Fuzz(func(t *testing.T, data []byte, k uint) {
+	f.Fuzz(func(t *testing.T, data []byte, k, a, b uint16) {
 		if len(data) == 0 {
 			return // Skip empty slices
 		}
 
-		// Ensure k is within bounds
-		k = k % uint(len(data))
+		if a < 0 {
+			a = -a
+		}
+
+		if b < 0 {
+			b = -b
+		}
+
+		// Ensure a, b, and k are within bounds
+		a = a % uint16(len(data))
+		b = b % uint16(len(data))
+		if a > b {
+			a, b = b, a // Ensure a < b
+		} else if a == b {
+			b++ // Ensure b is at least 1 greater than a
+		}
+
+		n := b - a
+		k %= n
+		if k == 0 {
+			k++
+		}
 
 		// Convert byte slice to int slice
 		input := make([]int, len(data))
-		for i, b := range data {
-			input[i] = int(b)
+		for i, v := range data {
+			input[i] = int(v)
 		}
 
-		testSelect(t, input, int(k), "Select", func(slice []int, k int) {
+		testSelect(t, input, 0, int(n), int(k), "Select", func(slice []int, a, b, k int) {
 			Select(sort.IntSlice(slice), k)
 		})
 
-		testSelect(t, input, int(k), "Ordered", func(slice []int, k int) {
+		testSelect(t, input, 0, int(n), int(k), "Ordered", func(slice []int, a, b, k int) {
 			Ordered(slice, k)
 		})
 
-		testSelect(t, input, int(k), "Func", func(slice []int, k int) {
+		testSelect(t, input, 0, int(n), int(k), "Func", func(slice []int, a, b, k int) {
 			Func(slice, k, cmp.Compare)
 		})
 
-		testSelect(t, input, int(k), "heapSelect", func(slice []int, k int) {
-			pdqselect(sort.IntSlice(slice), 0, len(slice), k-1, 0) // limit = 0 means we'll use heapSelect
+		// testSelect(t, input, int(a), int(b), int(k), "pdqselect", func(slice []int, a, b, k int) {
+		// 	pdqselect(sort.IntSlice(slice), a, b, k-1, bits.Len(uint(n)))
+		// })
+
+		// testSelect(t, input, int(a), int(b), int(k), "pdqselectOrdered", func(slice []int, a, b, k int) {
+		// 	pdqselectOrdered(slice, a, b, k-1, bits.Len(uint(n)))
+		// })
+
+		//testSelect(t, input, int(a), int(b), int(k), "pdqselectFunc", func(slice []int, a, b, k int) {
+		//	pdqselectFunc(slice, a, b, k-1, bits.Len(uint(n)), cmp.Compare)
+		//})
+
+		testSelect(t, input, int(a), int(b), int(k), "heapSelect", func(slice []int, a, b, k int) {
+			heapSelect(sort.IntSlice(slice), a, b, k)
 		})
 
-		testSelect(t, input, int(k), "heapSelectOrdered", func(slice []int, k int) {
-			pdqselectOrdered(slice, 0, len(slice), k-1, 0) // limit = 0 means we'll use heapSelect
+		testSelect(t, input, int(a), int(b), int(k), "heapSelectOrdered", func(slice []int, a, b, k int) {
+			heapSelectOrdered(slice, a, b, k)
 		})
 
-		testSelect(t, input, int(k), "heapSelectFunc", func(slice []int, k int) {
-			pdqselectFunc(slice, 0, len(slice), k-1, 0, cmp.Compare) // limit = 0 means we'll use heapSelect
+		testSelect(t, input, int(a), int(b), int(k), "heapSelectFunc", func(slice []int, a, b, k int) {
+			heapSelectFunc(slice, a, b, k, cmp.Compare)
 		})
 	})
 }
 
-func testSelect(t *testing.T, input []int, k int, name string, selectFunc func([]int, int)) {
+func testSelect(t *testing.T, input []int, a, b, k int, name string, selectFunc func([]int, int, int, int)) {
 	t.Helper()
 
 	// Create a copy for sorting
 	sorted := make([]int, len(input))
 	copy(sorted, input)
-	sort.Ints(sorted)
+	sort.Ints(sorted[a:b])
 
 	// Create another copy for selecting
 	output := make([]int, len(input))
 	copy(output, input)
 
-	// Run Select
-	selectFunc(output, k)
+	// Run pdqselect
+	selectFunc(output, a, b, k)
 
-	// Check if the first k elements are the k smallest (unsorted)
-	firstK := make([]int, k)
-	copy(firstK, output[:k])
-	sort.Ints(firstK)
-
-	for i := 0; i < k; i++ {
-		if firstK[i] != sorted[i] {
-			t.Errorf("%s(k=%d, n=%d): expected %d in first k elements, but got %d\ninput:  %v\nsorted: %v\noutput: %v",
-				name, k, len(input), sorted[i], firstK[i], input, sorted, output)
+	// Check if all elements before and including k are smaller or equal, and all elements after k are larger or equal
+	for i := a; i < a+k; i++ {
+		if output[i] > sorted[a+k-1] {
+			t.Errorf("%s(a=%d, b=%d, k=%d, n=%d): element at index %d (%d) is larger than k-th element (%d)\ninput:  %v\nsorted: %v\noutput: %v",
+				name, a, b, k, b-a, i, output[i], sorted[a+k-1], input, sorted, output)
 		}
 	}
 
-	// Check if all elements in the first k are smaller than or equal to all elements after k
-	max := findMax(output[:k])
-	for i := k; i < len(output); i++ {
-		if output[i] < max {
-			t.Errorf("%s(k=%d, n=%d): element at index %d (%d) is smaller than max of first k elements (%d)\ninput:  %v\nsorted: %v\noutput: %v",
-				name, k, len(input), i, input[i], max, input, sorted, output)
+	for i := a + k - 1; i < b; i++ {
+		if output[i] < output[a+k-1] {
+			t.Errorf("%s(a=%d, b=%d, k=%d, n=%d): element at index %d (%d) is smaller than k-th element (%d)\ninput:  %v\nsorted: %v\noutput: %v",
+				name, a, b, k, b-a, i, output[i], sorted[a+k-1], input, sorted, output)
 		}
 	}
 }
