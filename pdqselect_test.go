@@ -55,6 +55,7 @@ func FuzzSelect(f *testing.F) {
 	f.Add([]byte{1, 1, 1, 1, 1}, uint16(1), uint16(0), uint16(5))
 	f.Add([]byte{1, 4, 7, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, uint16(7), uint16(3), uint16(12))
 	f.Add([]byte{254, 4, 7, 2, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 253}, uint16(7), uint16(0), uint16(16))
+	f.Add([]byte{0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 253, 0, 0, 0, 0, 0, 0}, uint16(0), uint16(20), uint16(12))
 
 	f.Fuzz(func(t *testing.T, data []byte, k, a, b uint16) {
 		if len(data) == 0 {

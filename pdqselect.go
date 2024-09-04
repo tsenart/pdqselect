@@ -98,24 +98,28 @@ func pdqselect(data sort.Interface, a, b, k, limit int) {
 		// elements equal to and elements greater than the pivot.
 		if a > 0 && !data.Less(a-1, pivot) {
 			mid := partitionEqual(data, a, b, pivot)
+			if k < mid {
+				return
+			}
 			a = mid
 			continue
 		}
 
 		mid, alreadyPartitioned := partition(data, a, b, pivot)
-		wasPartitioned = alreadyPartitioned
+		if k == mid {
+			return
+		}
 
+		wasPartitioned = alreadyPartitioned
 		leftLen, rightLen := mid-a, b-mid
 		balanceThreshold := length / 8
 
 		if k < mid {
 			wasBalanced = leftLen >= balanceThreshold
 			b = mid
-		} else if k > mid {
+		} else { // k < mid
 			wasBalanced = rightLen >= balanceThreshold
 			a = mid + 1
-		} else {
-			return
 		}
 	}
 }
@@ -169,24 +173,28 @@ func pdqselectOrdered[T cmp.Ordered](data []T, a, b, k, limit int) {
 		// elements equal to and elements greater than the pivot.
 		if a > 0 && !cmp.Less(data[a-1], data[pivot]) {
 			mid := partitionEqualOrdered(data, a, b, pivot)
+			if k < mid {
+				return
+			}
 			a = mid
 			continue
 		}
 
 		mid, alreadyPartitioned := partitionOrdered(data, a, b, pivot)
-		wasPartitioned = alreadyPartitioned
+		if k == mid {
+			return
+		}
 
+		wasPartitioned = alreadyPartitioned
 		leftLen, rightLen := mid-a, b-mid
 		balanceThreshold := length / 8
 
 		if k < mid {
 			wasBalanced = leftLen >= balanceThreshold
 			b = mid
-		} else if k > mid {
+		} else { // k < mid
 			wasBalanced = rightLen >= balanceThreshold
 			a = mid + 1
-		} else {
-			return
 		}
 	}
 }
@@ -240,24 +248,28 @@ func pdqselectFunc[E any](data []E, a, b, k, limit int, cmp func(a, b E) int) {
 		// elements equal to and elements greater than the pivot.
 		if a > 0 && !(cmp(data[a-1], data[pivot]) < 0) {
 			mid := partitionEqualCmpFunc(data, a, b, pivot, cmp)
+			if k < mid {
+				return
+			}
 			a = mid
 			continue
 		}
 
 		mid, alreadyPartitioned := partitionCmpFunc(data, a, b, pivot, cmp)
-		wasPartitioned = alreadyPartitioned
+		if k == mid {
+			return
+		}
 
+		wasPartitioned = alreadyPartitioned
 		leftLen, rightLen := mid-a, b-mid
 		balanceThreshold := length / 8
 
 		if k < mid {
 			wasBalanced = leftLen >= balanceThreshold
 			b = mid
-		} else if k > mid {
+		} else { // k < mid
 			wasBalanced = rightLen >= balanceThreshold
 			a = mid + 1
-		} else {
-			return
 		}
 	}
 }
