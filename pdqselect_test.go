@@ -179,7 +179,7 @@ func BenchmarkSelect(b *testing.B) {
 				benchName := fmt.Sprintf("n=%d/k=%d/%s", n, k, dist)
 				data := generateSlice(n, dist)
 
-				b.Run("Sort/"+benchName, func(b *testing.B) {
+				b.Run("fn=Sort/"+benchName, func(b *testing.B) {
 					b.ReportAllocs()
 					b.ResetTimer()
 					for i := 0; i < b.N; i++ {
@@ -190,7 +190,7 @@ func BenchmarkSelect(b *testing.B) {
 					}
 				})
 
-				b.Run("Ordered/"+benchName, func(b *testing.B) {
+				b.Run("fn=Ordered/"+benchName, func(b *testing.B) {
 					b.ReportAllocs()
 					b.ResetTimer()
 					for i := 0; i < b.N; i++ {
@@ -200,7 +200,7 @@ func BenchmarkSelect(b *testing.B) {
 					}
 				})
 
-				b.Run("Func/"+benchName, func(b *testing.B) {
+				b.Run("fn=Func/"+benchName, func(b *testing.B) {
 					b.ReportAllocs()
 					b.ResetTimer()
 					for i := 0; i < b.N; i++ {
@@ -210,7 +210,7 @@ func BenchmarkSelect(b *testing.B) {
 					}
 				})
 
-				b.Run("Select/"+benchName, func(b *testing.B) {
+				b.Run("fn=Select/"+benchName, func(b *testing.B) {
 					b.ReportAllocs()
 					b.ResetTimer()
 					for i := 0; i < b.N; i++ {
