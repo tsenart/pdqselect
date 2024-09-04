@@ -27,74 +27,40 @@ func TestSelect(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run("Select/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, func(input []int, k int) {
+			testSelect(t, tc.input, tc.k, "Select", func(input []int, k int) {
 				Select(sort.IntSlice(input), k)
 			})
 		})
 
 		t.Run("Ordered/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, func(input []int, k int) {
+			testSelect(t, tc.input, tc.k, "Ordered", func(input []int, k int) {
 				Ordered(input, k)
 			})
 		})
 
 		t.Run("Func/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, func(input []int, k int) {
+			testSelect(t, tc.input, tc.k, "Func", func(input []int, k int) {
 				Func(input, k, cmp.Compare)
 			})
 		})
 
 		t.Run("heapSelect/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, func(input []int, k int) {
+			testSelect(t, tc.input, tc.k, "heapSelect", func(input []int, k int) {
 				pdqselect(sort.IntSlice(input), 0, len(input), k-1, 0) // limit = 0 means we'll use heapSelect
 			})
 		})
 
 		t.Run("heapSelectOrdered/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, func(input []int, k int) {
+			testSelect(t, tc.input, tc.k, "heapSelectOrdered", func(input []int, k int) {
 				pdqselectOrdered(input, 0, len(input), k-1, 0) // limit = 0 means we'll use heapSelect
 			})
 		})
 
 		t.Run("heapSelectFunc/"+tc.name, func(t *testing.T) {
-			testSelect(t, tc.input, tc.k, func(input []int, k int) {
+			testSelect(t, tc.input, tc.k, "heapSelectFunc", func(input []int, k int) {
 				pdqselectFunc(input, 0, len(input), k-1, 0, cmp.Compare) // limit = 0 means we'll use heapSelect
 			})
 		})
-	}
-}
-
-func testSelect(t *testing.T, input []int, k int, selectFunc func([]int, int)) {
-	t.Helper()
-
-	output := make([]int, len(input))
-	copy(output, input)
-
-	sorted := make([]int, len(input))
-	copy(sorted, input)
-	slices.Sort(sorted)
-
-	selectFunc(output, k)
-
-	// Check if the first k elements are the k smallest (unsorted)
-	firstK := make([]int, k)
-	copy(firstK, output[:k])
-	sort.Ints(firstK)
-
-	for i := 0; i < k; i++ {
-		if firstK[i] != sorted[i] {
-			t.Errorf("k=%d, n=%d: expected %d in first k elements, but got %d\ninput:  %v\nsorted: %v\noutput: %v",
-				k, len(input), sorted[i], firstK[i], input, sorted, output)
-		}
-	}
-
-	// Check if all elements in the first k are smaller than or equal to all elements after k
-	max := findMax(output[:k])
-	for i := k; i < len(output); i++ {
-		if output[i] < max {
-			t.Errorf("k=%d, n=%d: element at index %d (%d) is smaller than max of first k elements (%d)\ninput:  %v\nsorted: %v\noutput: %v",
-				k, len(input), i, input[i], max, input, sorted, output)
-		}
 	}
 }
 
@@ -122,33 +88,33 @@ func FuzzSelect(f *testing.F) {
 			input[i] = int(b)
 		}
 
-		fuzzSelect(t, input, int(k), "Select", func(slice []int, k int) {
+		testSelect(t, input, int(k), "Select", func(slice []int, k int) {
 			Select(sort.IntSlice(slice), k)
 		})
 
-		fuzzSelect(t, input, int(k), "Ordered", func(slice []int, k int) {
+		testSelect(t, input, int(k), "Ordered", func(slice []int, k int) {
 			Ordered(slice, k)
 		})
 
-		fuzzSelect(t, input, int(k), "Func", func(slice []int, k int) {
+		testSelect(t, input, int(k), "Func", func(slice []int, k int) {
 			Func(slice, k, cmp.Compare)
 		})
 
-		fuzzSelect(t, input, int(k), "heapSelect", func(slice []int, k int) {
+		testSelect(t, input, int(k), "heapSelect", func(slice []int, k int) {
 			pdqselect(sort.IntSlice(slice), 0, len(slice), k-1, 0) // limit = 0 means we'll use heapSelect
 		})
 
-		fuzzSelect(t, input, int(k), "heapSelectOrdered", func(slice []int, k int) {
+		testSelect(t, input, int(k), "heapSelectOrdered", func(slice []int, k int) {
 			pdqselectOrdered(slice, 0, len(slice), k-1, 0) // limit = 0 means we'll use heapSelect
 		})
 
-		fuzzSelect(t, input, int(k), "heapSelectFunc", func(slice []int, k int) {
+		testSelect(t, input, int(k), "heapSelectFunc", func(slice []int, k int) {
 			pdqselectFunc(slice, 0, len(slice), k-1, 0, cmp.Compare) // limit = 0 means we'll use heapSelect
 		})
 	})
 }
 
-func fuzzSelect(t *testing.T, input []int, k int, name string, selectFunc func([]int, int)) {
+func testSelect(t *testing.T, input []int, k int, name string, selectFunc func([]int, int)) {
 	t.Helper()
 
 	// Create a copy for sorting
