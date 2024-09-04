@@ -61,14 +61,6 @@ func FuzzSelect(f *testing.F) {
 			return // Skip empty slices
 		}
 
-		if a < 0 {
-			a = -a
-		}
-
-		if b < 0 {
-			b = -b
-		}
-
 		// Ensure a, b, and k are within bounds
 		a = a % uint16(len(data))
 		b = b % uint16(len(data))
