@@ -146,7 +146,7 @@ func testSelect(t *testing.T, input []int, a, b, k int, name string, selectFunc 
 	for i := a + k - 1; i < b; i++ {
 		if output[i] < output[a+k-1] {
 			t.Errorf("%s(a=%d, b=%d, k=%d, n=%d): element at index %d (%d) is smaller than k-th element (%d)\ninput:  %v\nsorted: %v\noutput: %v",
-				name, a, b, k, b-a, i, output[i], sorted[a+k-1], input, sorted, output)
+				name, a, b, k, b-a, i, output[i], output[a+k-1], input, sorted, output)
 		}
 	}
 }
