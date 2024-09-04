@@ -11,7 +11,7 @@
 - **Adaptive**: Efficiently handles various data patterns, including already sorted data, reverse-sorted data, and data with many duplicates.
 - **In-Place**: Operates directly on the input slice without requiring additional memory allocation.
 - **Generic**: Supports multiple data types and custom comparison functions.
-- **Robust**: Gracefully degrades to heapsort for pathological cases, ensuring O(n log n) worst-case performance.
+- **Robust**: Gracefully degrades to heap select for pathological cases, ensuring O(n log k) worst-case performance.
 
 ## Installation
 

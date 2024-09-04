@@ -65,9 +65,9 @@ func pdqselect(data sort.Interface, a, b, k, limit int) {
 			return
 		}
 
-		// Fall back to heapsort if too many bad choices were made.
+		// Fall back to heap select if too many bad choices were made.
 		if limit == 0 {
-			heapSort(data, a, b)
+			heapSelect(data, a, b, k-a+1)
 			return
 		}
 
@@ -136,9 +136,9 @@ func pdqselectOrdered[T cmp.Ordered](data []T, a, b, k, limit int) {
 			return
 		}
 
-		// Fall back to heapsort if too many bad choices were made.
+		// Fall back to heap select if too many bad choices were made.
 		if limit == 0 {
-			heapSortOrdered(data, a, b)
+			heapSelectOrdered(data, a, b, k-a+1)
 			return
 		}
 
@@ -207,9 +207,9 @@ func pdqselectFunc[E any](data []E, a, b, k, limit int, cmp func(a, b E) int) {
 			return
 		}
 
-		// Fall back to heapsort if too many bad choices were made.
+		// Fall back to heap select if too many bad choices were made.
 		if limit == 0 {
-			heapSortCmpFunc(data, a, b, cmp)
+			heapSelectFunc(data, a, b, k-a+1, cmp)
 			return
 		}
 
@@ -258,6 +258,57 @@ func pdqselectFunc[E any](data []E, a, b, k, limit int, cmp func(a, b E) int) {
 			a = mid + 1
 		} else {
 			return
+		}
+	}
+}
+
+func heapSelect(data sort.Interface, a, b, k int) {
+	n := b - a
+
+	// Build max-heap of first k elements
+	for i := (k - 1) / 2; i >= 0; i-- {
+		siftDown(data, i, k, a)
+	}
+
+	// Process remaining elements
+	for i := k; i < n; i++ {
+		if data.Less(a+i, a) {
+			data.Swap(a, a+i)
+			siftDown(data, 0, k, a)
+		}
+	}
+}
+
+func heapSelectOrdered[T cmp.Ordered](data []T, a, b, k int) {
+	n := b - a
+
+	// Build max-heap of first k elements
+	for i := (k - 1) / 2; i >= 0; i-- {
+		siftDownOrdered(data, i, k, a)
+	}
+
+	// Process remaining elements
+	for i := k; i < n; i++ {
+		if cmp.Less(data[a+i], data[a]) {
+			data[a], data[a+i] = data[a+i], data[a]
+			siftDownOrdered(data, 0, k, a)
+		}
+	}
+}
+
+func heapSelectFunc[E any](data []E, a, b, k int, cmp func(a, b E) int) {
+	n := b - a
+
+	// Build max-heap of first k elements
+	for i := (k - 1) / 2; i >= 0; i-- {
+		siftDownCmpFunc(data, i, k, a, cmp)
+	}
+
+	// Process remaining elements
+	for i := k; i < n; i++ {
+		if cmp(data[a+i], data[a]) < 0 {
+			data[a], data[a+i] = data[a+i], data[a]
+			siftDownCmpFunc(data, 0, k, a, cmp)
 		}
 	}
 }
