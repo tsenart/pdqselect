@@ -61,6 +61,29 @@ func FuzzSelect(f *testing.F) {
 			return // Skip empty slices
 		}
 
+		// Convert byte slice to int slice
+		input := make([]int, len(data))
+		for i, v := range data {
+			input[i] = int(v)
+		}
+
+		k = k % uint16(len(data))
+		if k == 0 {
+			k++
+		}
+
+		testSelect(t, input, 0, len(data), int(k), "Select", func(slice []int, a, b, k int) {
+			Select(sort.IntSlice(slice), k)
+		})
+
+		testSelect(t, input, 0, len(data), int(k), "Ordered", func(slice []int, a, b, k int) {
+			Ordered(slice, k)
+		})
+
+		testSelect(t, input, 0, len(data), int(k), "Func", func(slice []int, a, b, k int) {
+			Func(slice, k, cmp.Compare)
+		})
+
 		// Ensure a, b, and k are within bounds
 		a = a % uint16(len(data))
 		b = b % uint16(len(data))
@@ -75,24 +98,6 @@ func FuzzSelect(f *testing.F) {
 		if k == 0 {
 			k++
 		}
-
-		// Convert byte slice to int slice
-		input := make([]int, len(data))
-		for i, v := range data {
-			input[i] = int(v)
-		}
-
-		testSelect(t, input, 0, int(n), int(k), "Select", func(slice []int, a, b, k int) {
-			Select(sort.IntSlice(slice), k)
-		})
-
-		testSelect(t, input, 0, int(n), int(k), "Ordered", func(slice []int, a, b, k int) {
-			Ordered(slice, k)
-		})
-
-		testSelect(t, input, 0, int(n), int(k), "Func", func(slice []int, a, b, k int) {
-			Func(slice, k, cmp.Compare)
-		})
 
 		// testSelect(t, input, int(a), int(b), int(k), "pdqselect", func(slice []int, a, b, k int) {
 		// 	pdqselect(sort.IntSlice(slice), a, b, k-1, bits.Len(uint(n)))
@@ -134,6 +139,17 @@ func testSelect(t *testing.T, input []int, a, b, k int, name string, selectFunc 
 
 	// Run pdqselect
 	selectFunc(output, a, b, k)
+
+	// Get the first k elements, sort them, and compare with sorted slice
+	firstK := make([]int, k)
+	copy(firstK, output[a:a+k])
+	sort.Ints(firstK)
+	for i := range firstK {
+		if firstK[i] != sorted[a+i] {
+			t.Errorf("%s(a=%d, b=%d, k=%d, n=%d): sorted output element at index %d (%d) does not match sorted input (%d)\ninput:  %v\nsorted: %v\noutput: %v\nfirstK: %v",
+				name, a, b, k, b-a, i, firstK[i], sorted[a+i], input, sorted, output, firstK)
+		}
+	}
 
 	// Check if all elements before and including k are smaller or equal, and all elements after k are larger or equal
 	for i := a; i < a+k; i++ {
