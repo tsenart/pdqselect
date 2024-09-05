@@ -169,6 +169,7 @@ func testSelect(t *testing.T, input []int, a, b, k int, name string, selectFunc 
 }
 
 func BenchmarkSelect(b *testing.B) {
+	rng := rand.New(rand.NewPCG(42, 42)) // Static seed for consistent benchmarks
 	for _, n := range []int{1e6, 1e4, 100} {
 		for _, k := range []int{1, 100, 1000} {
 			if k > n {
@@ -177,7 +178,7 @@ func BenchmarkSelect(b *testing.B) {
 
 			for _, dist := range []string{"random", "sorted", "reversed", "mostly_sorted"} {
 				benchName := fmt.Sprintf("n=%d/k=%d/%s", n, k, dist)
-				data := generateSlice(n, dist)
+				data := generateSlice(rng, n, dist)
 
 				b.Run("fn=Sort/"+benchName, func(b *testing.B) {
 					b.ReportAllocs()
@@ -239,12 +240,12 @@ func findMax(slice []int) int {
 }
 
 // generateSlice creates a slice of ints with the specified size and distribution
-func generateSlice(size int, distribution string) []int {
+func generateSlice(rng *rand.Rand, size int, distribution string) []int {
 	slice := make([]int, size)
 	switch distribution {
 	case "random":
 		for i := range slice {
-			slice[i] = rand.Int()
+			slice[i] = rng.Int()
 		}
 	case "sorted":
 		for i := range slice {
@@ -256,11 +257,13 @@ func generateSlice(size int, distribution string) []int {
 		}
 	case "mostly_sorted":
 		for i := range slice {
-			if rand.Float32() < 0.9 {
-				slice[i] = i
-			} else {
-				slice[i] = rand.Int()
-			}
+			slice[i] = i
+		}
+		// Shuffle about 10% of the elements
+		for i := 0; i < size/10; i++ {
+			j := rng.IntN(size)
+			k := rng.IntN(size)
+			slice[j], slice[k] = slice[k], slice[j]
 		}
 	}
 	return slice
