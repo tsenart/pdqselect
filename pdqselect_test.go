@@ -226,23 +226,9 @@ func BenchmarkSelect(b *testing.B) {
 						Select(sort.IntSlice(dataCopy), k)
 					}
 				})
-
 			}
 		}
 	}
-}
-
-func findMax(slice []int) int {
-	if len(slice) == 0 {
-		return 0
-	}
-	max := slice[0]
-	for _, v := range slice[1:] {
-		if v > max {
-			max = v
-		}
-	}
-	return max
 }
 
 // generateSlice creates a slice of ints with the specified size and distribution
