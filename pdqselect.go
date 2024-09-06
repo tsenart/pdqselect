@@ -93,7 +93,7 @@ func pdqselect(data sort.Interface, a, b, k, limit int) {
 
 		// Fall back to heap select if too many bad choices were made.
 		if limit == 0 {
-			heapSelect(data, a, b, k+1)
+			heapSelect(data, a, b, k)
 			return
 		}
 
@@ -190,7 +190,7 @@ func pdqselectOrdered[T cmp.Ordered](data []T, a, b, k, limit int) {
 
 		// Fall back to heap select if too many bad choices were made.
 		if limit == 0 {
-			heapSelectOrdered(data, a, b, k+1)
+			heapSelectOrdered(data, a, b, k)
 			return
 		}
 
@@ -219,7 +219,7 @@ func pdqselectOrdered[T cmp.Ordered](data []T, a, b, k, limit int) {
 
 		// Probably the slice contains many duplicate elements, partition the slice into
 		// elements equal to and elements greater than the pivot.
-		if a > 0 && !cmp.Less(data[a-1], data[pivot]) {
+		if a > 0 && data[a-1] >= data[pivot] {
 			mid := partitionEqualOrdered(data, a, b, pivot)
 			if k < mid {
 				return
@@ -291,7 +291,7 @@ func pdqselectFunc[E any](data []E, a, b, k, limit int, cmp func(a, b E) int) {
 
 		// Fall back to heap select if too many bad choices were made.
 		if limit == 0 {
-			heapSelectFunc(data, a, b, k+1, cmp)
+			heapSelectFunc(data, a, b, k, cmp)
 			return
 		}
 
@@ -320,7 +320,7 @@ func pdqselectFunc[E any](data []E, a, b, k, limit int, cmp func(a, b E) int) {
 
 		// Probably the slice contains many duplicate elements, partition the slice into
 		// elements equal to and elements greater than the pivot.
-		if a > 0 && !(cmp(data[a-1], data[pivot]) < 0) {
+		if a > 0 && cmp(data[a-1], data[pivot]) >= 0 {
 			mid := partitionEqualCmpFunc(data, a, b, pivot, cmp)
 			if k < mid {
 				return
@@ -350,51 +350,66 @@ func pdqselectFunc[E any](data []E, a, b, k, limit int, cmp func(a, b E) int) {
 
 func heapSelect(data sort.Interface, a, b, k int) {
 	n := b - a
+	hi := k + 1
 
 	// Build max-heap of first k elements
-	for i := (k - 1) / 2; i >= 0; i-- {
-		siftDown(data, i, k, a)
+	for i := k / 2; i >= 0; i-- {
+		siftDown(data, i, hi, a)
 	}
 
 	// Process remaining elements
-	for i := k; i < n; i++ {
-		if data.Less(a+i, a) {
-			data.Swap(a, a+i)
-			siftDown(data, 0, k, a)
+	for i := hi; i < n; i++ {
+		j := a + i
+		if data.Less(j, a) {
+			data.Swap(a, j)
+			siftDown(data, 0, hi, a)
 		}
 	}
+
+	// Place the k-th element into its final place
+	data.Swap(a, a+k)
 }
 
 func heapSelectOrdered[T cmp.Ordered](data []T, a, b, k int) {
 	n := b - a
+	hi := k + 1
 
 	// Build max-heap of first k elements
-	for i := (k - 1) / 2; i >= 0; i-- {
-		siftDownOrdered(data, i, k, a)
+	for i := k / 2; i >= 0; i-- {
+		siftDownOrdered(data, i, hi, a)
 	}
 
 	// Process remaining elements
-	for i := k; i < n; i++ {
-		if cmp.Less(data[a+i], data[a]) {
-			data[a], data[a+i] = data[a+i], data[a]
-			siftDownOrdered(data, 0, k, a)
+	for i := hi; i < n; i++ {
+		j := a + i
+		if data[j] < data[a] {
+			data[a], data[j] = data[j], data[a]
+			siftDownOrdered(data, 0, hi, a)
 		}
 	}
+
+	// Place the k-th element into its final place
+	data[a], data[a+k] = data[a+k], data[a]
 }
 
 func heapSelectFunc[E any](data []E, a, b, k int, cmp func(a, b E) int) {
 	n := b - a
+	hi := k + 1
 
 	// Build max-heap of first k elements
-	for i := (k - 1) / 2; i >= 0; i-- {
-		siftDownCmpFunc(data, i, k, a, cmp)
+	for i := k / 2; i >= 0; i-- {
+		siftDownCmpFunc(data, i, hi, a, cmp)
 	}
 
 	// Process remaining elements
-	for i := k; i < n; i++ {
-		if cmp(data[a+i], data[a]) < 0 {
-			data[a], data[a+i] = data[a+i], data[a]
-			siftDownCmpFunc(data, 0, k, a, cmp)
+	for i := hi; i < n; i++ {
+		j := a + i
+		if cmp(data[j], data[a]) < 0 {
+			data[a], data[j] = data[j], data[a]
+			siftDownCmpFunc(data, 0, hi, a, cmp)
 		}
 	}
+
+	// Place the k-th element into its final place
+	data[a], data[a+k] = data[a+k], data[a]
 }

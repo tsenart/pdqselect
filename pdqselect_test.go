@@ -85,6 +85,18 @@ func FuzzSelect(f *testing.F) {
 			Func(slice, k, cmp.Compare)
 		})
 
+		testSelect(t, input, 0, len(data), int(k), "pdqselect", func(slice []int, a, b, k int) {
+			pdqselect(sort.IntSlice(slice), 0, len(slice), k-1, 0)
+		})
+
+		testSelect(t, input, 0, len(data), int(k), "pdqselectOrdered", func(slice []int, a, b, k int) {
+			pdqselectOrdered(slice, 0, len(slice), k-1, 0)
+		})
+
+		testSelect(t, input, 0, len(data), int(k), "pdqselectFunc", func(slice []int, a, b, k int) {
+			pdqselectFunc(slice, 0, len(slice), k-1, 0, cmp.Compare)
+		})
+
 		// Ensure a, b, and k are within bounds
 		a = a % uint16(len(data))
 		b = b % uint16(len(data))
@@ -100,28 +112,16 @@ func FuzzSelect(f *testing.F) {
 			k++
 		}
 
-		// testSelect(t, input, int(a), int(b), int(k), "pdqselect", func(slice []int, a, b, k int) {
-		// 	pdqselect(sort.IntSlice(slice), a, b, k-1, bits.Len(uint(n)))
-		// })
-
-		// testSelect(t, input, int(a), int(b), int(k), "pdqselectOrdered", func(slice []int, a, b, k int) {
-		// 	pdqselectOrdered(slice, a, b, k-1, bits.Len(uint(n)))
-		// })
-
-		//testSelect(t, input, int(a), int(b), int(k), "pdqselectFunc", func(slice []int, a, b, k int) {
-		//	pdqselectFunc(slice, a, b, k-1, bits.Len(uint(n)), cmp.Compare)
-		//})
-
 		testSelect(t, input, int(a), int(b), int(k), "heapSelect", func(slice []int, a, b, k int) {
-			heapSelect(sort.IntSlice(slice), a, b, k)
+			heapSelect(sort.IntSlice(slice), a, b, k-1)
 		})
 
 		testSelect(t, input, int(a), int(b), int(k), "heapSelectOrdered", func(slice []int, a, b, k int) {
-			heapSelectOrdered(slice, a, b, k)
+			heapSelectOrdered(slice, a, b, k-1)
 		})
 
 		testSelect(t, input, int(a), int(b), int(k), "heapSelectFunc", func(slice []int, a, b, k int) {
-			heapSelectFunc(slice, a, b, k, cmp.Compare)
+			heapSelectFunc(slice, a, b, k-1, cmp.Compare)
 		})
 	})
 }
@@ -140,6 +140,12 @@ func testSelect(t *testing.T, input []int, a, b, k int, name string, selectFunc 
 
 	// Run pdqselect
 	selectFunc(output, a, b, k)
+
+	// Assert that the kth element is the expected one
+	if output[a+k-1] != sorted[a+k-1] {
+		t.Errorf("%s(a=%d, b=%d, k=%d, n=%d): k-th element (%d) does not match sorted input (%d)\ninput:  %v\nsorted: %v\noutput: %v",
+			name, a, b, k, b-a, output[a+k-1], sorted[a+k-1], input, sorted, output)
+	}
 
 	// Get the first k elements, sort them, and compare with sorted slice
 	firstK := make([]int, k)
