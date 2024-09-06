@@ -50,6 +50,32 @@ func Func[E any](data []E, k int, cmp func(i, j E) int) {
 }
 
 func pdqselect(data sort.Interface, a, b, k, limit int) {
+	if k == 0 { // Fast path; just find the minimum and place it in a
+		mn := a
+		for i := a; i < b; i++ {
+			if data.Less(i, mn) {
+				mn = i
+			}
+		}
+		if mn != a {
+			data.Swap(mn, a)
+		}
+		return
+	}
+
+	if hi := b - 1; k == hi { // Fast path; just find the maximum and place it in b-1
+		mx := a
+		for i := a + 1; i < b; i++ {
+			if data.Less(mx, i) {
+				mx = i
+			}
+		}
+		if mx != hi {
+			data.Swap(mx, hi)
+		}
+		return
+	}
+
 	const maxInsertion = 12
 
 	var (
@@ -125,6 +151,28 @@ func pdqselect(data sort.Interface, a, b, k, limit int) {
 }
 
 func pdqselectOrdered[T cmp.Ordered](data []T, a, b, k, limit int) {
+	if k == 0 { // Fast path; just find the minimum and place it in a
+		mn := a
+		for i := a + 1; i < b; i++ {
+			if data[i] < data[mn] {
+				mn = i
+			}
+		}
+		data[a], data[mn] = data[mn], data[a]
+		return
+	}
+
+	if hi := b - 1; k == hi { // Fast path; just find the maximum and place it in b-1
+		mx := a
+		for i := a + 1; i < b; i++ {
+			if data[i] > data[mx] {
+				mx = i
+			}
+		}
+		data[hi], data[mx] = data[mx], data[hi]
+		return
+	}
+
 	const maxInsertion = 12
 
 	var (
@@ -200,6 +248,32 @@ func pdqselectOrdered[T cmp.Ordered](data []T, a, b, k, limit int) {
 }
 
 func pdqselectFunc[E any](data []E, a, b, k, limit int, cmp func(a, b E) int) {
+	if k == 0 { // Fast path; just find the minimum and place it in a
+		mn := a
+		for i := a + 1; i < b; i++ {
+			if cmp(data[i], data[mn]) < 0 {
+				mn = i
+			}
+		}
+		if mn != a {
+			data[a], data[mn] = data[mn], data[a]
+		}
+		return
+	}
+
+	if hi := b - 1; k == hi { // Fast path; just find the maximum
+		mx := a
+		for i := a + 1; i < b; i++ {
+			if cmp(data[i], data[mx]) > 0 {
+				mx = i
+			}
+		}
+		if mx != hi {
+			data[hi], data[mx] = data[mx], data[hi]
+		}
+		return
+	}
+
 	const maxInsertion = 12
 
 	var (
